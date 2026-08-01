@@ -24,7 +24,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-black tracking-wider text-white drop-shadow-lg">GAMANANTHA ANVAYA</h1>
-                    <p class="text-xs font-bold text-blue-400 drop-shadow">OSKA 2026/2027 - Portal Pemilihan OSIS & Penerimaan</p>
+                    <p class="text-xs font-bold text-blue-400 drop-shadow">OSKA 2026/2027 - Portal Pemilihan OSKA</p>
                 </div>
             </div>
 
@@ -32,14 +32,14 @@
             <div class="relative z-10 my-auto max-w-xl">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-900/90 backdrop-blur-md border border-blue-500/50 shadow-lg mb-6">
                     <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
-                    <span class="text-xs font-black tracking-wider text-blue-200 uppercase">PEMILOS SMKS NURUL ISLAM PERIODE 2026 / 2027</span>
+                    <span class="text-xs font-black tracking-wider text-blue-200 uppercase">PEMILU OSKA SMKS NURUL ISLAM PERIODE 2026 / 2027</span>
                 </div>
                 
                 <h2 class="text-3xl xl:text-4xl font-black text-white leading-tight mb-4 drop-shadow-lg">
-                    Pemilihan Ketua OSIS SMKS Nurul Islam 2026/2027
+                    Pemilihan Ketua OSIS & MPK SMKS Nurul Islam 2026/2027
                 </h2>
                 <p class="text-slate-100 text-sm leading-relaxed mb-8 font-medium drop-shadow-md">
-                    Selamat datang di Portal Utama SMKS Nurul Islam. Kelola proses E-Voting Pemilihan OSIS Periode 2026/2027 dan pendaftaran siswa secara transparan, akurat, dan terstruktur.
+                    Selamat datang di Portal Utama Pemilihan OSIS & MPK SMKS Nurul Islam. Kelola proses E-Voting Pemilihan OSIS & MPK Periode 2026/2027 dan pendaftaran siswa secara transparan, akurat, dan terstruktur.
                 </p>
 
                 {{-- Key Feature Badges --}}
@@ -98,10 +98,10 @@
                     </div>
 
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                        Masuk ke System
+                        Masuk ke Sistem
                     </h2>
                     <p class="mt-2 text-sm text-slate-600 font-medium">
-                        Silakan masukkan kredensial akun administrator SMKS Nurul Islam Anda.
+                        Silakan masukkan kredensial akun administrator OSKA 2026/2027.
                     </p>
                 </div>
 
@@ -123,7 +123,7 @@
                         {{-- Username Input --}}
                         <div>
                             <label for="username" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-2">
-                                Username Administrator
+                                Username 
                             </label>
                             <div class="relative rounded-xl shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -155,7 +155,7 @@
                         <div x-data="{ showPassword: false }">
                             <div class="flex items-center justify-between mb-2">
                                 <label for="password" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700">
-                                    Kata Sandi (Password)
+                                    Password
                                 </label>
                             </div>
                             <div class="relative rounded-xl shadow-sm">

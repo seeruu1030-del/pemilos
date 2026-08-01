@@ -10,43 +10,40 @@
         
         <title>Hasil Seleksi OSIS & MPK 2026/2027 | OSKA 2026/2027</title>
         
-        {{-- Fonts: Inter & Plus Jakarta Sans --}}
+        {{-- Fonts: Outfit & Urbanist --}}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Urbanist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
         
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <style>
             body {
-                font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+                font-family: 'Outfit', 'Urbanist', sans-serif;
             }
             [x-cloak] { display: none !important; }
         </style>
     </head>
-    <body class="min-h-screen font-sans antialiased text-slate-800 bg-[#F4F7FC] flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+    <body class="min-h-full font-sans antialiased text-slate-800 bg-[#F4F7FC] flex flex-col selection:bg-blue-600 selection:text-white">
         
-        {{-- HERO BACKGROUND BANNER --}}
-        <header class="relative bg-gradient-to-r from-[#1E5BB8] via-[#1A4F9C] to-[#153F7C] text-white pt-10 sm:pt-12 pb-24 sm:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden shadow-md">
-            {{-- Grid Line Overlay Pattern --}}
-            <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-            
-            <div class="max-w-4xl mx-auto relative z-10 text-center space-y-3 sm:space-y-4">
-                {{-- Official Badge Pill --}}
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-sky-200 text-[11px] sm:text-xs font-black border border-white/20 shadow-sm">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        {{-- HEADER BANNER (OCEAN BLUE DAPODIK THEME) --}}
+        <header class="bg-gradient-to-r from-[#1E5BB8] via-[#1A4F9C] to-[#153F7C] text-white pt-8 pb-20 sm:pb-24 px-4 sm:px-6 relative overflow-hidden border-b border-blue-900/40 shadow-lg">
+            {{-- Subtle Background Pattern Accent --}}
+            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto text-center space-y-3 relative z-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-[11px] font-black text-sky-200 tracking-wide uppercase backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     Portal Resmi Pengumuman Seleksi OSIS & MPK 2026/2027
                 </div>
 
-                {{-- Hero Headline --}}
-                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+                <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-white drop-shadow-md">
                     Pengumuman Hasil Seleksi OSIS & MPK
                 </h1>
-
-                <p class="text-xs sm:text-base text-sky-100 font-medium max-w-xl mx-auto leading-relaxed">
+                
+                <p class="text-xs sm:text-sm text-sky-100 max-w-xl mx-auto font-medium leading-relaxed drop-shadow">
                     Masukkan nama lengkap dan tanggal lahir calon peserta untuk melihat hasil keputusan kelulusan seleksi.
                 </p>
-                
-                {{-- Back Link to Homepage --}}
+
                 <div class="pt-1 sm:pt-2">
                     <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-extrabold text-white transition shadow-sm">
                         <svg class="w-4 h-4 text-sky-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,7 +56,7 @@
         </header>
 
         {{-- MAIN FLOATING CONTENT AREA --}}
-        <main class="relative z-20 max-w-2xl mx-auto px-4 -mt-16 sm:-mt-20 mb-12 sm:mb-16 w-full space-y-6">
+        <main class="relative z-20 max-w-2xl mx-auto px-3 sm:px-6 -mt-14 sm:-mt-20 mb-12 sm:mb-16 w-full space-y-6">
 
             {{-- CASE 1: PROSES REKRUTMEN SEDANG BERLANGSUNG --}}
             @if($mode === 'in_progress')
@@ -93,16 +90,12 @@
                 <div class="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-10 shadow-xl space-y-6 sm:space-y-8 text-center animate-fade-in"
                      x-data="{
                          target: new Date('{{ $targetTimestamp }}').getTime(),
-                         days: 0,
-                         hours: 0,
-                         minutes: 0,
-                         seconds: 0,
-                         expired: false,
+                         now: new Date().getTime(),
+                         days: 0, hours: 0, minutes: 0, seconds: 0,
                          updateTimer() {
-                             const now = new Date().getTime();
-                             const distance = this.target - now;
-                             if (distance < 0) {
-                                 this.expired = true;
+                             this.now = new Date().getTime();
+                             let distance = this.target - this.now;
+                             if (distance <= 0) {
                                  window.location.reload();
                                  return;
                              }
@@ -133,11 +126,9 @@
                             Akses pencarian hasil kelulusan seleksi akan dibuka secara otomatis pada jadwal berikut:
                         </p>
                         @if($datetime)
-                            <div class="pt-2">
-                                <span class="inline-block px-4 py-2 rounded-xl bg-blue-50 border border-blue-200 text-xs font-black text-[#1E5BB8]">
-                                    🗓 {{ \Carbon\Carbon::parse($datetime)->translatedFormat('l, d F Y - H:i') }} WIB
-                                </span>
-                            </div>
+                            <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-[#1E5BB8] text-xs font-black border border-blue-200">
+                                📅 {{ \Carbon\Carbon::parse($datetime)->translatedFormat('l, d F Y - H:i') }} WIB
+                            </span>
                         @endif
                     </div>
 
@@ -174,13 +165,13 @@
 
                     <div class="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-10 shadow-xl space-y-6 sm:space-y-8 animate-fade-in">
                         
-                        {{-- Card Title Branding --}}
-                        <div class="text-center space-y-3 border-b border-slate-100 pb-5">
-                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-blue-600 p-0.5 bg-white shadow-md mx-auto">
+                        {{-- Card Header Logo OSIS MPK --}}
+                        <div class="flex items-center gap-3 sm:gap-4 border-b border-slate-100 pb-5">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-blue-600 p-0.5 bg-white shadow-md shrink-0">
                                 <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
                             </div>
                             <div class="space-y-1">
-                                <h2 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight uppercase">
+                                <h2 class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight uppercase">
                                     HASIL SELEKSI OSIS & MPK 2026/2027
                                 </h2>
                                 <p class="text-xs text-slate-500 font-semibold">
@@ -214,7 +205,7 @@
                             {{-- Input Split Tanggal Lahir (Tanggal / Bulan / Tahun) --}}
                             <div>
                                 <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-2">
-                                    Tanggal Lahir *
+                                    Tanggal Lahir (Tanggal / Bulan / Tahun) *
                                 </label>
                                 
                                 <div class="flex items-center gap-1.5 sm:gap-2">
@@ -228,8 +219,8 @@
                                                max="31" 
                                                value="{{ old('birth_day', $searchDay ?? '') }}" 
                                                required 
-                                               placeholder="Tanggal" 
-                                               class="w-full py-3.5 px-2.5 sm:px-3 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none transition" />
+                                               placeholder="Tanggal (DD)" 
+                                               class="w-full py-3.5 px-2 sm:px-3 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none transition" />
                                     </div>
 
                                     <span class="text-slate-400 font-black text-base sm:text-lg shrink-0">/</span>
@@ -244,8 +235,8 @@
                                                max="12" 
                                                value="{{ old('birth_month', $searchMonth ?? '') }}" 
                                                required 
-                                               placeholder="Bulan" 
-                                               class="w-full py-3.5 px-2.5 sm:px-3 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none transition" />
+                                               placeholder="Bulan (MM)" 
+                                               class="w-full py-3.5 px-2 sm:px-3 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none transition" />
                                     </div>
 
                                     <span class="text-slate-400 font-black text-base sm:text-lg shrink-0">/</span>
@@ -260,8 +251,8 @@
                                                max="2026" 
                                                value="{{ old('birth_year', $searchYear ?? '') }}" 
                                                required 
-                                               placeholder="Tahun" 
-                                               class="w-full py-3.5 px-2.5 sm:px-3 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none transition" />
+                                               placeholder="Tahun (YYYY)" 
+                                               class="w-full py-3.5 px-2 sm:px-3 bg-slate-50 border border-slate-300 rounded-xl text-center font-bold text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none transition" />
                                     </div>
                                 </div>
                                 @error('birth_date')
@@ -299,47 +290,55 @@
                     
                     {{-- 🟩 HASIL LOLOS SELEKSI (PASSED - HIJAU) --}}
                     @if(isset($candidate) && $candidate->isPassed())
-                        <div class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 text-white rounded-3xl p-5 sm:p-10 shadow-xl border border-emerald-500 space-y-6 animate-fade-in">
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-500/50 pb-5 sm:pb-6">
-                                <div class="flex items-center gap-3 sm:gap-4">
-                                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-white/80 bg-white p-0.5 shadow-lg shrink-0">
-                                        <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
+                        <div class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 text-white rounded-3xl p-4 sm:p-8 shadow-xl border border-emerald-500 space-y-5 sm:space-y-6 animate-fade-in">
+                            
+                            {{-- Responsive Card Header --}}
+                            <div class="border-b border-emerald-500/50 pb-4 sm:pb-6 space-y-3">
+                                {{-- Top Row: Logo OSIS & Status Checkmark Badge --}}
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-white/80 bg-white p-0.5 shadow-lg shrink-0">
+                                            <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
+                                        </div>
+                                        <div class="min-w-0">
+                                            <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/30 border border-emerald-400/60 text-emerald-100 text-[10px] sm:text-xs font-black tracking-wider uppercase whitespace-nowrap">
+                                                SELEKSI 2026/2027
+                                            </span>
+                                            <p class="text-emerald-100 text-xs font-bold mt-0.5 truncate">
+                                                CALON PENGURUS {{ $candidate->organization_type }}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="space-y-1">
-                                        <span class="inline-block px-3.5 py-1 rounded-full bg-emerald-500/30 border border-emerald-400 text-emerald-100 text-[10px] sm:text-xs font-black tracking-widest uppercase">
-                                            PENGUMUMAN KELULUSAN 2026 / 2027
-                                        </span>
-                                        <h3 class="text-xl sm:text-3xl font-black text-white tracking-tight">
-                                            SELAMAT! ANDA DINYATAKAN LOLOS SELEKSI
-                                        </h3>
-                                        <p class="text-emerald-100 text-xs font-semibold">
-                                            CALON PENGURUS {{ $candidate->organization_type }} PERIODE 2026/2027
-                                        </p>
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-lg sm:text-2xl font-black shadow-lg">
+                                        ✓
                                     </div>
                                 </div>
 
-                                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-2xl sm:text-3xl font-black shadow-lg self-end sm:self-center">
-                                    ✓
+                                {{-- Main Heading Title --}}
+                                <div>
+                                    <h3 class="text-lg sm:text-2xl font-black text-white tracking-tight leading-snug">
+                                        SELAMAT! ANDA DINYATAKAN LOLOS SELEKSI
+                                    </h3>
                                 </div>
                             </div>
 
                             {{-- Candidate Details --}}
                             <div class="bg-emerald-950/40 rounded-2xl p-4 sm:p-5 border border-emerald-500/40 backdrop-blur-md grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-emerald-300 font-bold uppercase tracking-wider text-[10px]">Nomor Registrasi</p>
-                                    <p class="text-sm sm:text-base font-mono font-black text-white">{{ $candidate->registration_number }}</p>
+                                    <p class="text-sm sm:text-base font-mono font-black text-white mt-0.5">{{ $candidate->registration_number }}</p>
                                 </div>
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-emerald-300 font-bold uppercase tracking-wider text-[10px]">Nama Lengkap Calon</p>
-                                    <p class="text-sm sm:text-base font-black text-white">{{ $candidate->full_name }}</p>
+                                    <p class="text-sm sm:text-base font-black text-white mt-0.5">{{ $candidate->full_name }}</p>
                                 </div>
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-emerald-300 font-bold uppercase tracking-wider text-[10px]">Tempat, Tgl Lahir</p>
-                                    <p class="text-xs sm:text-sm font-bold text-white">{{ $candidate->birth_place }}, {{ $candidate->birth_date->format('d/m/Y') }}</p>
+                                    <p class="text-xs sm:text-sm font-bold text-white mt-0.5">{{ $candidate->birth_place }}, {{ $candidate->birth_date->format('d/m/Y') }}</p>
                                 </div>
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-emerald-300 font-bold uppercase tracking-wider text-[10px]">Kelas & Organisasi</p>
-                                    <p class="text-xs sm:text-sm font-bold text-white">{{ $candidate->class_name }} ({{ $candidate->organization_type }})</p>
+                                    <p class="text-xs sm:text-sm font-bold text-white mt-0.5">{{ $candidate->class_name }} ({{ $candidate->organization_type }})</p>
                                 </div>
                             </div>
 
@@ -367,47 +366,55 @@
 
                     {{-- 🟥 HASIL TIDAK LOLOS SELEKSI (FAILED - MERAH) --}}
                     @elseif(isset($candidate) && $candidate->isFailed())
-                        <div class="bg-gradient-to-br from-rose-600 via-rose-700 to-red-800 text-white rounded-3xl p-5 sm:p-10 shadow-xl border border-rose-500 space-y-6 animate-fade-in">
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-rose-500/50 pb-5 sm:pb-6">
-                                <div class="flex items-center gap-3 sm:gap-4">
-                                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-white/80 bg-white p-0.5 shadow-lg shrink-0">
-                                        <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
+                        <div class="bg-gradient-to-br from-rose-600 via-rose-700 to-red-800 text-white rounded-3xl p-4 sm:p-8 shadow-xl border border-rose-500 space-y-5 sm:space-y-6 animate-fade-in">
+                            
+                            {{-- Responsive Card Header --}}
+                            <div class="border-b border-rose-500/50 pb-4 sm:pb-6 space-y-3">
+                                {{-- Top Row: Logo OSIS & Status Cross Badge --}}
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-white/80 bg-white p-0.5 shadow-lg shrink-0">
+                                            <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
+                                        </div>
+                                        <div class="min-w-0">
+                                            <span class="inline-block px-2.5 py-0.5 rounded-full bg-rose-500/30 border border-rose-400/60 text-rose-100 text-[10px] sm:text-xs font-black tracking-wider uppercase whitespace-nowrap">
+                                                SELEKSI 2026/2027
+                                            </span>
+                                            <p class="text-rose-100 text-xs font-bold mt-0.5 truncate">
+                                                CALON PENGURUS {{ $candidate->organization_type }}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="space-y-1">
-                                        <span class="inline-block px-3.5 py-1 rounded-full bg-rose-500/30 border border-rose-400 text-rose-100 text-[10px] sm:text-xs font-black tracking-widest uppercase">
-                                            PENGUMUMAN KELULUSAN 2026 / 2027
-                                        </span>
-                                        <h3 class="text-xl sm:text-3xl font-black text-white tracking-tight">
-                                            MOHON MAAF, ANDA DINYATAKAN TIDAK LOLOS SELEKSI
-                                        </h3>
-                                        <p class="text-rose-100 text-xs font-semibold">
-                                            CALON PENGURUS {{ $candidate->organization_type }} PERIODE 2026/2027
-                                        </p>
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-lg sm:text-2xl font-black shadow-lg">
+                                        ✕
                                     </div>
                                 </div>
 
-                                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-2xl sm:text-3xl font-black shadow-lg self-end sm:self-center">
-                                    ✕
+                                {{-- Main Heading Title --}}
+                                <div>
+                                    <h3 class="text-lg sm:text-2xl font-black text-white tracking-tight leading-snug">
+                                        MOHON MAAF, ANDA DINYATAKAN TIDAK LOLOS SELEKSI
+                                    </h3>
                                 </div>
                             </div>
 
                             {{-- Candidate Details --}}
                             <div class="bg-rose-950/40 rounded-2xl p-4 sm:p-5 border border-rose-500/40 backdrop-blur-md grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-rose-300 font-bold uppercase tracking-wider text-[10px]">Nomor Registrasi</p>
-                                    <p class="text-sm sm:text-base font-mono font-black text-white">{{ $candidate->registration_number }}</p>
+                                    <p class="text-sm sm:text-base font-mono font-black text-white mt-0.5">{{ $candidate->registration_number }}</p>
                                 </div>
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-rose-300 font-bold uppercase tracking-wider text-[10px]">Nama Lengkap Calon</p>
-                                    <p class="text-sm sm:text-base font-black text-white">{{ $candidate->full_name }}</p>
+                                    <p class="text-sm sm:text-base font-black text-white mt-0.5">{{ $candidate->full_name }}</p>
                                 </div>
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-rose-300 font-bold uppercase tracking-wider text-[10px]">Tempat, Tgl Lahir</p>
-                                    <p class="text-xs sm:text-sm font-bold text-white">{{ $candidate->birth_place }}, {{ $candidate->birth_date->format('d/m/Y') }}</p>
+                                    <p class="text-xs sm:text-sm font-bold text-white mt-0.5">{{ $candidate->birth_place }}, {{ $candidate->birth_date->format('d/m/Y') }}</p>
                                 </div>
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-rose-300 font-bold uppercase tracking-wider text-[10px]">Kelas & Organisasi</p>
-                                    <p class="text-xs sm:text-sm font-bold text-white">{{ $candidate->class_name }} ({{ $candidate->organization_type }})</p>
+                                    <p class="text-xs sm:text-sm font-bold text-white mt-0.5">{{ $candidate->class_name }} ({{ $candidate->organization_type }})</p>
                                 </div>
                             </div>
 
@@ -429,39 +436,47 @@
 
                     {{-- 🟧 HASIL PROSES SELEKSI (PENDING - ORANYE) --}}
                     @elseif(isset($candidate) && $candidate->isPending())
-                        <div class="bg-gradient-to-br from-amber-500 via-amber-600 to-orange-700 text-white rounded-3xl p-5 sm:p-10 shadow-xl border border-amber-400 space-y-6 animate-fade-in">
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-amber-400/50 pb-5 sm:pb-6">
-                                <div class="flex items-center gap-3 sm:gap-4">
-                                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-white/80 bg-white p-0.5 shadow-lg shrink-0">
-                                        <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
+                        <div class="bg-gradient-to-br from-amber-500 via-amber-600 to-orange-700 text-white rounded-3xl p-4 sm:p-8 shadow-xl border border-amber-400 space-y-5 sm:space-y-6 animate-fade-in">
+                            
+                            {{-- Responsive Card Header --}}
+                            <div class="border-b border-amber-400/50 pb-4 sm:pb-6 space-y-3">
+                                {{-- Top Row: Logo OSIS & Status Hourglass Badge --}}
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                                        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-white/80 bg-white p-0.5 shadow-lg shrink-0">
+                                            <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
+                                        </div>
+                                        <div class="min-w-0">
+                                            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/30 border border-amber-300/60 text-amber-100 text-[10px] sm:text-xs font-black tracking-wider uppercase whitespace-nowrap">
+                                                SELEKSI 2026/2027
+                                            </span>
+                                            <p class="text-amber-100 text-xs font-bold mt-0.5 truncate">
+                                                CALON PENGURUS {{ $candidate->organization_type }}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="space-y-1">
-                                        <span class="inline-block px-3.5 py-1 rounded-full bg-amber-400/30 border border-amber-300 text-amber-100 text-[10px] sm:text-xs font-black tracking-widest uppercase">
-                                            PENGUMUMAN KELULUSAN 2026 / 2027
-                                        </span>
-                                        <h3 class="text-xl sm:text-3xl font-black text-white tracking-tight">
-                                            STATUS SELEKSI DALAM PROSES PENILAIAN
-                                        </h3>
-                                        <p class="text-amber-100 text-xs font-semibold">
-                                            CALON PENGURUS {{ $candidate->organization_type }} PERIODE 2026/2027
-                                        </p>
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-lg sm:text-2xl font-black shadow-lg">
+                                        ⏳
                                     </div>
                                 </div>
 
-                                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-2xl font-black shadow-lg self-end sm:self-center">
-                                    ⏳
+                                {{-- Main Heading Title --}}
+                                <div>
+                                    <h3 class="text-lg sm:text-2xl font-black text-white tracking-tight leading-snug">
+                                        STATUS SELEKSI DALAM PROSES PENILAIAN
+                                    </h3>
                                 </div>
                             </div>
 
                             {{-- Candidate Details --}}
                             <div class="bg-amber-950/40 rounded-2xl p-4 sm:p-5 border border-amber-400/40 backdrop-blur-md grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-amber-200 font-bold uppercase tracking-wider text-[10px]">Nomor Registrasi</p>
-                                    <p class="text-sm sm:text-base font-mono font-black text-white">{{ $candidate->registration_number }}</p>
+                                    <p class="text-sm sm:text-base font-mono font-black text-white mt-0.5">{{ $candidate->registration_number }}</p>
                                 </div>
-                                <div>
+                                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
                                     <p class="text-amber-200 font-bold uppercase tracking-wider text-[10px]">Nama Lengkap Calon</p>
-                                    <p class="text-sm sm:text-base font-black text-white">{{ $candidate->full_name }}</p>
+                                    <p class="text-sm sm:text-base font-black text-white mt-0.5">{{ $candidate->full_name }}</p>
                                 </div>
                             </div>
 

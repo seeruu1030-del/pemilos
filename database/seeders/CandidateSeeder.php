@@ -50,7 +50,7 @@ class CandidateSeeder extends Seeder
                 'registration_number' => 'OSIS-2026-0004',
                 'full_name' => 'Rizky Pratama',
                 'birth_place' => 'Tangerang',
-                'birth_date' => '2009-11-05',
+                'birth_date' => '2009-05-11',
                 'gender' => 'Laki-laki',
                 'class_name' => 'X TKR 1',
                 'organization_type' => 'OSIS',
@@ -71,7 +71,7 @@ class CandidateSeeder extends Seeder
         ];
 
         foreach ($sampleCandidates as $candidate) {
-            Candidate::firstOrCreate(
+            Candidate::updateOrCreate(
                 ['registration_number' => $candidate['registration_number']],
                 $candidate
             );

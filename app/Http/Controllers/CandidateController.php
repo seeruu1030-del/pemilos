@@ -88,6 +88,19 @@ class CandidateController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Combine split date fields (Tanggal / Bulan / Tahun) if provided
+        if ($request->filled('birth_day') && $request->filled('birth_month') && $request->filled('birth_year')) {
+            $day = (int) $request->birth_day;
+            $month = (int) $request->birth_month;
+            $year = (int) $request->birth_year;
+
+            if (checkdate($month, $day, $year)) {
+                $request->merge([
+                    'birth_date' => sprintf('%04d-%02d-%02d', $year, $month, $day),
+                ]);
+            }
+        }
+
         $validated = $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'birth_place' => ['required', 'string', 'max:255'],
@@ -100,7 +113,7 @@ class CandidateController extends Controller
         ], [
             'full_name.required' => 'Nama lengkap calon wajib diisi.',
             'birth_place.required' => 'Tempat lahir wajib diisi.',
-            'birth_date.required' => 'Tanggal lahir wajib diisi.',
+            'birth_date.required' => 'Kombinasi Tanggal, Bulan, dan Tahun lahir wajib diisi.',
             'birth_date.before' => 'Tanggal lahir tidak valid.',
             'gender.required' => 'Jenis kelamin wajib dipilih.',
             'class_name.required' => 'Kelas wajib diisi.',
@@ -129,6 +142,19 @@ class CandidateController extends Controller
      */
     public function update(Request $request, Candidate $candidate): RedirectResponse
     {
+        // Combine split date fields (Tanggal / Bulan / Tahun) if provided
+        if ($request->filled('birth_day') && $request->filled('birth_month') && $request->filled('birth_year')) {
+            $day = (int) $request->birth_day;
+            $month = (int) $request->birth_month;
+            $year = (int) $request->birth_year;
+
+            if (checkdate($month, $day, $year)) {
+                $request->merge([
+                    'birth_date' => sprintf('%04d-%02d-%02d', $year, $month, $day),
+                ]);
+            }
+        }
+
         $validated = $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'birth_place' => ['required', 'string', 'max:255'],

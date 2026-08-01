@@ -103,15 +103,53 @@
                     </div>
 
                     <div>
-                        <label for="birth_date" class="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2">
-                            Tanggal Lahir *
+                        <label class="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2">
+                            Tanggal Lahir (Tanggal / Bulan / Tahun) *
                         </label>
-                        <input type="date" 
-                               id="birth_date" 
-                               name="birth_date" 
-                               value="{{ old('birth_date') }}" 
-                               required 
-                               class="w-full py-3.5 px-4 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-600/20 focus:outline-none transition" />
+                        <div class="flex items-center gap-2">
+                            {{-- Tanggal --}}
+                            <div class="w-1/3">
+                                <input type="number" 
+                                       name="birth_day" 
+                                       inputmode="numeric"
+                                       min="1" 
+                                       max="31" 
+                                       value="{{ old('birth_day') }}" 
+                                       required 
+                                       placeholder="Tanggal (DD)" 
+                                       class="w-full py-3.5 px-3 bg-slate-50 border border-slate-300 rounded-xl text-center text-sm font-semibold text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-600/20 focus:outline-none transition" />
+                            </div>
+
+                            <span class="text-slate-400 font-bold text-lg">/</span>
+
+                            {{-- Bulan --}}
+                            <div class="w-1/3">
+                                <input type="number" 
+                                       name="birth_month" 
+                                       inputmode="numeric"
+                                       min="1" 
+                                       max="12" 
+                                       value="{{ old('birth_month') }}" 
+                                       required 
+                                       placeholder="Bulan (MM)" 
+                                       class="w-full py-3.5 px-3 bg-slate-50 border border-slate-300 rounded-xl text-center text-sm font-semibold text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-600/20 focus:outline-none transition" />
+                            </div>
+
+                            <span class="text-slate-400 font-bold text-lg">/</span>
+
+                            {{-- Tahun --}}
+                            <div class="w-1/3">
+                                <input type="number" 
+                                       name="birth_year" 
+                                       inputmode="numeric"
+                                       min="1990" 
+                                       max="2026" 
+                                       value="{{ old('birth_year') }}" 
+                                       required 
+                                       placeholder="Tahun (YYYY)" 
+                                       class="w-full py-3.5 px-3 bg-slate-50 border border-slate-300 rounded-xl text-center text-sm font-semibold text-slate-900 placeholder-slate-400 focus:border-[#1E5BB8] focus:bg-white focus:ring-4 focus:ring-blue-600/20 focus:outline-none transition" />
+                            </div>
+                        </div>
                         @error('birth_date')
                             <p class="mt-1.5 text-xs text-rose-600 font-semibold">{{ $message }}</p>
                         @enderror

@@ -82,7 +82,7 @@ class SelectionAnnouncementController extends Controller
             ]);
         }
 
-        // Combine split date fields securely
+        // Combine split date fields securely (Tanggal / Bulan / Tahun)
         if ($request->filled('birth_day') && $request->filled('birth_month') && $request->filled('birth_year')) {
             $day = (int) $request->birth_day;
             $month = (int) $request->birth_month;
@@ -115,6 +115,23 @@ class SelectionAnnouncementController extends Controller
                   ->orWhere('full_name', 'like', "%{$fullName}%");
             })
             ->first();
+
+        // Smart fallback: Check if day & month were inverted in legacy data
+        if (!$candidate && $request->filled('birth_day') && $request->filled('birth_month') && $request->filled('birth_year')) {
+            $swappedDay = (int) $request->birth_month;
+            $swappedMonth = (int) $request->birth_day;
+            $year = (int) $request->birth_year;
+
+            if (checkdate($swappedMonth, $swappedDay, $year)) {
+                $swappedDate = sprintf('%04d-%02d-%02d', $year, $swappedMonth, $swappedDay);
+                $candidate = Candidate::whereDate('birth_date', $swappedDate)
+                    ->where(function ($q) use ($fullName) {
+                        $q->where('full_name', 'like', $fullName)
+                          ->orWhere('full_name', 'like', "%{$fullName}%");
+                    })
+                    ->first();
+            }
+        }
 
         return view('pengumuman.index', [
             'candidate' => $candidate,
