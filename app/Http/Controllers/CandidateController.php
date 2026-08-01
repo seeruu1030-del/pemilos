@@ -1,0 +1,182 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Candidate;
+use App\Models\Setting;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+
+class CandidateController extends Controller
+{
+    /**
+     * Display candidate list for Admin-02 (Penerimaan Panitia OSIS & MPK).
+     */
+    public function index(Request $request): View
+    {
+        $query = Candidate::query();
+
+        // Search Filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('registration_number', 'like', "%{$search}%")
+                  ->orWhere('class_name', 'like', "%{$search}%")
+                  ->orWhere('birth_place', 'like', "%{$search}%");
+            });
+        }
+
+        // Organization Filter (OSIS / MPK)
+        if ($request->filled('organization')) {
+            $query->where('organization_type', $request->organization);
+        }
+
+        // Status Filter (pending / passed / failed)
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $candidates = $query->latest()->paginate(15)->withQueryString();
+
+        // Summary Statistics
+        $stats = [
+            'total' => Candidate::count(),
+            'osis' => Candidate::where('organization_type', 'OSIS')->count(),
+            'mpk' => Candidate::where('organization_type', 'MPK')->count(),
+            'passed' => Candidate::where('status', 'passed')->count(),
+            'failed' => Candidate::where('status', 'failed')->count(),
+            'pending' => Candidate::where('status', 'pending')->count(),
+        ];
+
+        // Announcement Settings
+        $announcementStatus = Setting::get('announcement_status', 'draft');
+        $announcementDatetime = Setting::get('announcement_datetime', '');
+
+        return view('penerimaan.index', compact('candidates', 'stats', 'announcementStatus', 'announcementDatetime'));
+    }
+
+    /**
+     * Update announcement schedule settings (Admin-02).
+     */
+    public function updateSetting(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'announcement_status' => ['required', Rule::in(['draft', 'scheduled', 'published'])],
+            'announcement_datetime' => ['nullable', 'date'],
+        ]);
+
+        Setting::set('announcement_status', $validated['announcement_status']);
+        Setting::set('announcement_datetime', $validated['announcement_datetime']);
+
+        return redirect()->back()
+            ->with('success', 'Pengaturan waktu & status akses pengumuman kelulusan berhasil diperbarui!');
+    }
+
+    /**
+     * Show form page to create a new candidate.
+     */
+    public function create(): View
+    {
+        return view('penerimaan.create');
+    }
+
+    /**
+     * Store a newly created candidate in storage.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'full_name' => ['required', 'string', 'max:255'],
+            'birth_place' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required', 'date', 'before:today'],
+            'gender' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
+            'class_name' => ['required', 'string', 'max:100'],
+            'organization_type' => ['required', Rule::in(['OSIS', 'MPK'])],
+            'status' => ['nullable', Rule::in(['pending', 'passed', 'failed'])],
+            'notes' => ['nullable', 'string', 'max:1000'],
+        ], [
+            'full_name.required' => 'Nama lengkap calon wajib diisi.',
+            'birth_place.required' => 'Tempat lahir wajib diisi.',
+            'birth_date.required' => 'Tanggal lahir wajib diisi.',
+            'birth_date.before' => 'Tanggal lahir tidak valid.',
+            'gender.required' => 'Jenis kelamin wajib dipilih.',
+            'class_name.required' => 'Kelas wajib diisi.',
+            'organization_type.required' => 'Pilihan organisasi (OSIS/MPK) wajib dipilih.',
+        ]);
+
+        $validated['registration_number'] = Candidate::generateRegistrationNumber($validated['organization_type']);
+        $validated['status'] = $validated['status'] ?? 'pending';
+
+        Candidate::create($validated);
+
+        return redirect()->route('penerimaan.index')
+            ->with('success', 'Calon pengurus ' . $validated['organization_type'] . ' (' . $validated['full_name'] . ') berhasil didaftarkan!');
+    }
+
+    /**
+     * Show form page to edit an existing candidate.
+     */
+    public function edit(Candidate $candidate): View
+    {
+        return view('penerimaan.edit', compact('candidate'));
+    }
+
+    /**
+     * Update the specified candidate in storage.
+     */
+    public function update(Request $request, Candidate $candidate): RedirectResponse
+    {
+        $validated = $request->validate([
+            'full_name' => ['required', 'string', 'max:255'],
+            'birth_place' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required', 'date', 'before:today'],
+            'gender' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
+            'class_name' => ['required', 'string', 'max:100'],
+            'organization_type' => ['required', Rule::in(['OSIS', 'MPK'])],
+            'status' => ['required', Rule::in(['pending', 'passed', 'failed'])],
+            'notes' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $candidate->update($validated);
+
+        return redirect()->route('penerimaan.index')
+            ->with('success', 'Data calon ' . $candidate->full_name . ' berhasil diperbarui!');
+    }
+
+    /**
+     * Quick status update for selection decision.
+     */
+    public function updateStatus(Request $request, Candidate $candidate): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status' => ['required', Rule::in(['pending', 'passed', 'failed'])],
+            'notes' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $candidate->update($validated);
+
+        $statusMessage = match ($validated['status']) {
+            'passed' => 'DITERIMA / LOLOS SELEKSI',
+            'failed' => 'TIDAK LOLOS SELEKSI',
+            default => 'DIBALIKKAN KE PROSES SELEKSI',
+        };
+
+        return redirect()->back()
+            ->with('success', "Status seleksi {$candidate->full_name} berhasil diubah menjadi: {$statusMessage}.");
+    }
+
+    /**
+     * Remove the specified candidate from storage.
+     */
+    public function destroy(Candidate $candidate): RedirectResponse
+    {
+        $name = $candidate->full_name;
+        $candidate->delete();
+
+        return redirect()->route('penerimaan.index')
+            ->with('success', "Data calon {$name} telah dihapus dari sistem.");
+    }
+}
