@@ -14,7 +14,7 @@ class CandidateSeeder extends Seeder
     {
         $sampleCandidates = [
             [
-                'registration_number' => 'OSIS-2026-0001',
+                'registration_number' => 'OSKA-2026-0001',
                 'full_name' => 'Ahmad Fauzi',
                 'birth_place' => 'Jakarta',
                 'birth_date' => '2009-05-14',
@@ -25,7 +25,7 @@ class CandidateSeeder extends Seeder
                 'notes' => 'Lolos wawancara dan tes kepemimpinan dengan nilai sangat baik.',
             ],
             [
-                'registration_number' => 'OSIS-2026-0002',
+                'registration_number' => 'OSKA-2026-0002',
                 'full_name' => 'Siti Nurhaliza',
                 'birth_place' => 'Bekasi',
                 'birth_date' => '2009-08-22',
@@ -36,7 +36,7 @@ class CandidateSeeder extends Seeder
                 'notes' => 'Diterima sebagai Calon Pengurus OSIS Divisi Kerohanian.',
             ],
             [
-                'registration_number' => 'MPK-2026-0003',
+                'registration_number' => 'OSKA-2026-0003',
                 'full_name' => 'Budi Santoso',
                 'birth_place' => 'Depok',
                 'birth_date' => '2009-03-10',
@@ -47,7 +47,7 @@ class CandidateSeeder extends Seeder
                 'notes' => 'Lolos seleksi MPK Komisi A (Legislasi).',
             ],
             [
-                'registration_number' => 'OSIS-2026-0004',
+                'registration_number' => 'OSKA-2026-0004',
                 'full_name' => 'Rizky Pratama',
                 'birth_place' => 'Tangerang',
                 'birth_date' => '2009-05-11',
@@ -58,7 +58,7 @@ class CandidateSeeder extends Seeder
                 'notes' => 'Belum memenuhi kualifikasi kehadiran wawancara.',
             ],
             [
-                'registration_number' => 'MPK-2026-0005',
+                'registration_number' => 'OSKA-2026-0005',
                 'full_name' => 'Anisa Rahmawati',
                 'birth_place' => 'Jakarta',
                 'birth_date' => '2009-07-19',

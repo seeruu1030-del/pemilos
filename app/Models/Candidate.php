@@ -78,9 +78,9 @@ class Candidate extends Model
     /**
      * Generate unique registration number.
      */
-    public static function generateRegistrationNumber(string $organizationType): string
+    public static function generateRegistrationNumber(?string $organizationType = null): string
     {
-        $prefix = $organizationType === 'MPK' ? 'MPK-2026-' : 'OSIS-2026-';
+        $prefix = 'OSKA-2026-';
         $latestId = self::max('id') + 1;
         
         return $prefix . str_pad((string)$latestId, 4, '0', STR_PAD_LEFT);

@@ -15,6 +15,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @if(Auth::user() && Auth::user()->isAdminPenerimaan())
+                        <x-nav-link :href="route('penerimaan.index')" :active="request()->routeIs('penerimaan.index')">
+                            Data Calon
+                        </x-nav-link>
+                        <x-nav-link :href="route('penerimaan.mapping.osis')" :active="request()->routeIs('penerimaan.mapping.osis')">
+                            Mapping OSIS
+                        </x-nav-link>
+                        <x-nav-link :href="route('penerimaan.mapping.mpk')" :active="request()->routeIs('penerimaan.mapping.mpk')">
+                            Mapping MPK
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +82,18 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if(Auth::user() && Auth::user()->isAdminPenerimaan())
+                <x-responsive-nav-link :href="route('penerimaan.index')" :active="request()->routeIs('penerimaan.index')">
+                    Data Calon OSIS & MPK
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('penerimaan.mapping.osis')" :active="request()->routeIs('penerimaan.mapping.osis')">
+                    Mapping Calon OSIS
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('penerimaan.mapping.mpk')" :active="request()->routeIs('penerimaan.mapping.mpk')">
+                    Mapping Calon MPK
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

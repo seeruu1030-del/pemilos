@@ -24,16 +24,16 @@
         </style>
     </head>
     <body class="h-full font-sans antialiased text-slate-800 bg-[#F4F7FC] selection:bg-blue-600 selection:text-white" x-data="{ sidebarOpen: false }">
-        <div class="min-h-screen flex bg-[#F4F7FC]">
+        <div class="h-screen flex overflow-hidden bg-[#F4F7FC]">
             
-            {{-- SIDEBAR CONTAINER --}}
-            <aside class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0F264A] text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col justify-between border-r border-[#1B3A6B] shadow-2xl"
+            {{-- SIDEBAR CONTAINER (FIXED ON SCREEN, DOES NOT SCROLL WITH BODY) --}}
+            <aside class="fixed inset-y-0 left-0 z-40 w-64 h-full bg-[#0F264A] text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:h-full flex flex-col justify-between border-r border-[#1B3A6B] shadow-2xl shrink-0"
                    :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
                 
                 {{-- Sidebar Top: Branding & Navigation --}}
-                <div>
+                <div class="flex-1 overflow-y-auto">
                     {{-- Header Logo Branding --}}
-                    <div class="h-20 flex items-center justify-between px-6 border-b border-[#1B3A6B] bg-[#0A1A34]">
+                    <div class="h-20 flex items-center justify-between px-6 border-b border-[#1B3A6B] bg-[#0A1A34] sticky top-0 z-10">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white/30 p-0.5 bg-white shadow-lg">
                                 <img src="{{ asset('images/logo_osis.jpg') }}" alt="Logo OSIS MPK" class="w-full h-full object-cover rounded-full">
@@ -53,42 +53,78 @@
                     </div>
 
                     {{-- Navigation Links --}}
-                    <nav class="p-4 space-y-2 text-xs font-bold">
-                        <div class="px-3 pt-2 text-[10px] font-black uppercase tracking-widest text-sky-300/60">
-                            MENU UTAMA
-                        </div>
-
+                    <nav class="p-4 space-y-4 text-xs font-bold">
                         @auth
                             @if(Auth::user()->isAdminPenerimaan())
-                                <a href="{{ route('penerimaan.index') }}" 
-                                   class="flex items-center justify-between px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('penerimaan.*') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
-                                    <div class="flex items-center gap-3">
-                                        <div class="p-1.5 rounded-xl {{ request()->routeIs('penerimaan.*') ? 'bg-white/20' : 'bg-[#152E54]' }}">
+                                <div>
+                                    <div class="px-3 pb-2 text-[10px] font-black uppercase tracking-widest text-sky-300/60">
+                                        MANAJEMEN REKRUTMEN
+                                    </div>
+                                    <a href="{{ route('penerimaan.index') }}" 
+                                       class="flex items-center justify-between px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('penerimaan.index') || request()->routeIs('penerimaan.create') || request()->routeIs('penerimaan.edit') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
+                                        <div class="flex items-center gap-3">
+                                            <div class="p-1.5 rounded-xl {{ request()->routeIs('penerimaan.index') || request()->routeIs('penerimaan.create') || request()->routeIs('penerimaan.edit') ? 'bg-white/20' : 'bg-[#152E54]' }}">
+                                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                                </svg>
+                                            </div>
+                                            <span>Data Calon OSIS & MPK</span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <div class="px-3 pb-2 text-[10px] font-black uppercase tracking-widest text-sky-300/60">
+                                        PEMETAAN PASLON
+                                    </div>
+                                    <div class="space-y-1">
+                                        <a href="{{ route('penerimaan.mapping.osis') }}" 
+                                           class="flex items-center justify-between px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('penerimaan.mapping.osis') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
+                                            <div class="flex items-center gap-3">
+                                                <div class="p-1.5 rounded-xl {{ request()->routeIs('penerimaan.mapping.osis') ? 'bg-white/20' : 'bg-[#152E54]' }}">
+                                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </div>
+                                                <span>Mapping Calon OSIS</span>
+                                            </div>
+                                        </a>
+
+                                        <a href="{{ route('penerimaan.mapping.mpk') }}" 
+                                           class="flex items-center justify-between px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('penerimaan.mapping.mpk') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
+                                            <div class="flex items-center gap-3">
+                                                <div class="p-1.5 rounded-xl {{ request()->routeIs('penerimaan.mapping.mpk') ? 'bg-white/20' : 'bg-[#152E54]' }}">
+                                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V8m0 3h4m-4 0H7" />
+                                                    </svg>
+                                                </div>
+                                                <span>Mapping Calon MPK</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            @else
+                                <div>
+                                    <div class="px-3 pb-2 text-[10px] font-black uppercase tracking-widest text-sky-300/60">
+                                        MENU UTAMA
+                                    </div>
+                                    <a href="{{ route('dashboard') }}" 
+                                       class="flex items-center gap-3 px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
+                                        <div class="p-1.5 rounded-xl {{ request()->routeIs('dashboard') ? 'bg-white/20' : 'bg-[#152E54]' }}">
                                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                             </svg>
                                         </div>
-                                        <span>Penerimaan OSIS & MPK</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-full {{ request()->routeIs('penerimaan.*') ? 'bg-white/20 text-white font-black' : 'bg-[#152E54] text-sky-300' }} text-[10px]">Admin-02</span>
-                                </a>
-                            @else
-                                <a href="{{ route('dashboard') }}" 
-                                   class="flex items-center gap-3 px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
-                                    <div class="p-1.5 rounded-xl {{ request()->routeIs('dashboard') ? 'bg-white/20' : 'bg-[#152E54]' }}">
-                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                        </svg>
-                                    </div>
-                                    <span>Dashboard Pemilos</span>
-                                </a>
+                                        <span>Dashboard Pemilos</span>
+                                    </a>
+                                </div>
                             @endif
                         @endauth
                     </nav>
                 </div>
 
                 {{-- Sidebar Bottom: User Profile Info & Logout --}}
-                <div class="p-4 border-t border-[#1B3A6B] bg-[#0A1A34]/80">
+                <div class="p-4 border-t border-[#1B3A6B] bg-[#0A1A34]/80 shrink-0">
                     @auth
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3 overflow-hidden">
@@ -116,10 +152,10 @@
             </aside>
 
             {{-- MAIN CONTENT WRAPPER --}}
-            <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
                 
                 {{-- TOP HEADER BAR --}}
-                <header class="bg-gradient-to-r from-[#1E5BB8] via-[#1A4F9C] to-[#153F7C] text-white border-b border-blue-900/40 min-h-[4.5rem] py-3 flex items-center justify-between px-6 sm:px-8 shadow-md">
+                <header class="bg-gradient-to-r from-[#1E5BB8] via-[#1A4F9C] to-[#153F7C] text-white border-b border-blue-900/40 min-h-[4.5rem] py-3 flex items-center justify-between px-6 sm:px-8 shadow-md shrink-0">
                     <div class="flex items-center gap-4">
                         {{-- Mobile Menu Toggle Button --}}
                         <button @click="sidebarOpen = true" class="lg:hidden p-2 rounded-xl text-sky-100 hover:bg-white/10" aria-label="Buka Sidebar">
@@ -143,7 +179,7 @@
                     </div>
                 </header>
 
-                {{-- MAIN PAGE CONTENT SLOT --}}
+                {{-- MAIN PAGE CONTENT SLOT (SCROLLABLE AREA) --}}
                 <main class="flex-1 overflow-y-auto bg-[#F4F7FC]">
                     {{ $slot }}
                 </main>
@@ -152,4 +188,5 @@
 
         </div>
     </body>
+</html>
 </html>

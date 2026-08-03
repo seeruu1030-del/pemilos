@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\CandidateMappingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SelectionAnnouncementController;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,13 @@ Route::middleware(['auth', 'role:admin-02'])->group(function () {
     Route::put('/penerimaan/calon/{candidate}', [CandidateController::class, 'update'])->name('penerimaan.update');
     Route::patch('/penerimaan/calon/{candidate}/status', [CandidateController::class, 'updateStatus'])->name('penerimaan.updateStatus');
     Route::delete('/penerimaan/calon/{candidate}', [CandidateController::class, 'destroy'])->name('penerimaan.destroy');
+
+    // Mapping Sub-Menu Routes for Calon OSIS & Calon MPK
+    Route::get('/penerimaan/mapping/osis', [CandidateMappingController::class, 'osis'])->name('penerimaan.mapping.osis');
+    Route::get('/penerimaan/mapping/mpk', [CandidateMappingController::class, 'mpk'])->name('penerimaan.mapping.mpk');
+    Route::post('/penerimaan/mapping', [CandidateMappingController::class, 'store'])->name('penerimaan.mapping.store');
+    Route::post('/penerimaan/mapping/{mapping}', [CandidateMappingController::class, 'update'])->name('penerimaan.mapping.update');
+    Route::delete('/penerimaan/mapping/{mapping}', [CandidateMappingController::class, 'destroy'])->name('penerimaan.mapping.destroy');
 });
 
 Route::middleware('auth')->group(function () {

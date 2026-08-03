@@ -61,7 +61,7 @@ class CandidateManagementTest extends TestCase
     {
         $user = User::factory()->create(['role' => 'admin-02']);
         $candidate = Candidate::create([
-            'registration_number' => 'OSIS-2026-9999',
+            'registration_number' => 'OSKA-2026-9999',
             'full_name' => 'Siti Aminah',
             'birth_place' => 'Bekasi',
             'birth_date' => '2009-06-15',
@@ -87,7 +87,7 @@ class CandidateManagementTest extends TestCase
         \App\Models\Setting::set('announcement_status', 'published');
 
         $candidate = Candidate::create([
-            'registration_number' => 'MPK-2026-8888',
+            'registration_number' => 'OSKA-2026-8888',
             'full_name' => 'Dewi Lestari',
             'birth_place' => 'Jakarta',
             'birth_date' => '2009-08-20',
