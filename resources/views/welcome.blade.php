@@ -45,7 +45,12 @@
                     <a href="#beranda" class="hover:text-white transition">Beranda</a>
                     <a href="#informasi" class="hover:text-white transition">Informasi Pendaftaran</a>
                     <a href="#jadwal" class="hover:text-white transition">Jadwal Seleksi</a>
-                    <a href="{{ route('pengumuman.index') }}" class="hover:text-white transition px-4 py-2 rounded-full bg-white/10 border border-white/20">Cek Hasil Kelulusan ➔</a>
+                    <a href="{{ route('pengumuman.index') }}" class="hover:text-white transition px-4 py-2 rounded-full bg-white/10 border border-white/20 flex items-center gap-1.5">
+                        <span>Cek Hasil Kelulusan</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </a>
                 </nav>
 
                 {{-- Admin Login Button --}}
@@ -72,7 +77,7 @@
                 <a href="#beranda" @click="mobileMenu = false" class="block py-2">Beranda</a>
                 <a href="#informasi" @click="mobileMenu = false" class="block py-2">Informasi Pendaftaran</a>
                 <a href="#jadwal" @click="mobileMenu = false" class="block py-2">Jadwal Seleksi</a>
-                <a href="{{ route('pengumuman.index') }}" class="block py-2 text-sky-300">Cek Hasil Kelulusan ➔</a>
+                <a href="{{ route('pengumuman.index') }}" class="block py-2 text-sky-300">Cek Hasil Kelulusan</a>
                 <a href="{{ route('login') }}" class="block py-3 px-4 bg-white text-[#1E5BB8] font-black rounded-xl text-center shadow-md">Masuk Sistem / Login Admin</a>
             </div>
         </header>
@@ -106,7 +111,10 @@
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span>Cek Hasil Kelulusan ➔</span>
+                        <span>Cek Hasil Kelulusan</span>
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                     </a>
 
                     <a href="#informasi" 

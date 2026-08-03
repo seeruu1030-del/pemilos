@@ -33,7 +33,7 @@
                             Sesi Otentikasi Aktif
                         </div>
                         <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                            Selamat Datang, {{ Auth::user()->name }}! 👋
+                            Selamat Datang, {{ Auth::user()->name }}!
                         </h3>
                         <p class="text-slate-300 text-sm">
                             Username: <code class="px-2 py-0.5 rounded bg-slate-800 text-indigo-300 font-mono">{{ Auth::user()->username }}</code> 
@@ -68,11 +68,17 @@
                     </p>
                     @if(Auth::user()->isAdminPemilos())
                         <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500 text-white text-xs font-semibold shadow-sm">
-                            ✓ Akses Diizinkan
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Akses Diizinkan</span>
                         </div>
                     @else
                         <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 text-xs font-semibold">
-                            🔒 Terkunci (Perlu Role Admin-01)
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            <span>Terkunci (Perlu Role Admin-01)</span>
                         </div>
                     @endif
                 </div>
@@ -93,11 +99,17 @@
                     </p>
                     @if(Auth::user()->isAdminPenerimaan())
                         <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500 text-white text-xs font-semibold shadow-sm">
-                            ✓ Akses Diizinkan
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Akses Diizinkan</span>
                         </div>
                     @else
                         <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 text-xs font-semibold">
-                            🔒 Terkunci (Perlu Role Admin-02)
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            <span>Terkunci (Perlu Role Admin-02)</span>
                         </div>
                     @endif
                 </div>

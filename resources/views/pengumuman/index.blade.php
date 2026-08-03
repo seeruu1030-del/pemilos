@@ -78,9 +78,14 @@
                         </p>
                     </div>
 
-                    <div class="p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-semibold leading-relaxed shadow-inner">
-                        📢 <strong>Informasi Panitia:</strong><br>
-                        Proses rekrutmen sedang berlangsung. Kembali lagi nanti saat pengumuman penerimaan kelulusan diinformasikan lagi oleh panitia sekolah.
+                    <div class="p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-semibold leading-relaxed shadow-inner flex items-start gap-3 text-left">
+                        <svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.684A1.76 1.76 0 013 12.002V9.998a1.76 1.76 0 012.436-1.682l10.87-4.148A1.76 1.76 0 0118 5.882V17.12a1.76 1.76 0 01-1.694 1.714l-10.87-5.15z" />
+                        </svg>
+                        <div>
+                            <strong class="text-amber-900 font-black">Informasi Panitia:</strong><br>
+                            Proses rekrutmen sedang berlangsung. Kembali lagi nanti saat pengumuman penerimaan kelulusan diinformasikan lagi oleh panitia sekolah.
+                        </div>
                     </div>
                 </div>
 
@@ -126,8 +131,11 @@
                             Akses pencarian hasil kelulusan seleksi akan dibuka secara otomatis pada jadwal berikut:
                         </p>
                         @if($datetime)
-                            <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-[#1E5BB8] text-xs font-black border border-blue-200">
-                                📅 {{ \Carbon\Carbon::parse($datetime)->translatedFormat('l, d F Y - H:i') }} WIB
+                            <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-50 text-[#1E5BB8] text-xs font-black border border-blue-200">
+                                <svg class="w-4 h-4 text-[#1E5BB8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span>{{ \Carbon\Carbon::parse($datetime)->translatedFormat('l, d F Y - H:i') }} WIB</span>
                             </span>
                         @endif
                     </div>
@@ -152,8 +160,11 @@
                         </div>
                     </div>
 
-                    <div class="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-600 font-medium">
-                        ⏳ Halaman ini akan memperbarui secara otomatis saat hitungan mundur selesai.
+                    <div class="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-600 font-medium flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4 text-slate-500 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Halaman ini akan memperbarui secara otomatis saat hitungan mundur selesai.</span>
                     </div>
                 </div>
 
@@ -263,7 +274,10 @@
                             {{-- PANDUAN PENGISIAN --}}
                             <div class="p-3.5 sm:p-4 rounded-2xl bg-blue-50 border border-blue-200 text-xs text-blue-950 space-y-1.5 font-medium">
                                 <p class="font-extrabold text-[#1E5BB8] flex items-center gap-1.5">
-                                    <span>📌</span> <span>Panduan Pengisian:</span>
+                                    <svg class="w-4 h-4 text-[#1E5BB8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Panduan Pengisian:</span>
                                 </p>
                                 <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-700 leading-relaxed">
                                     <li><strong>Nama Lengkap:</strong> Boleh menggunakan huruf KAPITAL atau kecil (Contoh: <code class="bg-blue-100 px-1 py-0.5 rounded text-blue-900 font-mono">AHMAD FAUZI</code>).</li>
@@ -309,8 +323,10 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-lg sm:text-2xl font-black shadow-lg">
-                                        ✓
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white shadow-lg">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                        </svg>
                                     </div>
                                 </div>
 
@@ -348,8 +364,13 @@
                                 </div>
                             @endif
 
-                            <div class="p-4 rounded-xl bg-white/10 border border-white/20 text-xs text-emerald-100 leading-relaxed font-medium">
-                                📌 <strong>Instruksi Selanjutnya:</strong> Silakan melakukan verifikasi berkas ulang dan mengikuti Orientasi Calon Pengurus {{ $candidate->organization_type }} pada jadwal yang ditentukan panitia.
+                            <div class="p-4 rounded-xl bg-white/10 border border-white/20 text-xs text-emerald-100 leading-relaxed font-medium flex items-start gap-2.5">
+                                <svg class="w-5 h-5 text-emerald-300 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <strong class="font-extrabold text-white">Instruksi Selanjutnya:</strong> Silakan melakukan verifikasi berkas ulang dan mengikuti Orientasi Calon Pengurus {{ $candidate->organization_type }} pada jadwal yang ditentukan panitia.
+                                </div>
                             </div>
 
                             {{-- BUTTON CEK NAMA LAIN --}}
@@ -385,8 +406,10 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-lg sm:text-2xl font-black shadow-lg">
-                                        ✕
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white shadow-lg">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
                                     </div>
                                 </div>
 
@@ -418,8 +441,13 @@
                                 </div>
                             </div>
 
-                            <div class="p-4 rounded-xl bg-white/10 border border-white/20 text-xs text-rose-100 leading-relaxed font-medium">
-                                💪 <strong>Pesan Panitia:</strong> Jangan berkecil hati. Perjuangan dan kesempatan berkarya serta berprestasi masih sangat luas di berbagai ekstrakurikuler sekolah.
+                            <div class="p-4 rounded-xl bg-white/10 border border-white/20 text-xs text-rose-100 leading-relaxed font-medium flex items-start gap-2.5">
+                                <svg class="w-5 h-5 text-rose-200 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <strong class="font-extrabold text-white">Pesan Panitia:</strong> Jangan berkecil hati. Perjuangan dan kesempatan berkarya serta berprestasi masih sangat luas di berbagai ekstrakurikuler sekolah.
+                                </div>
                             </div>
 
                             {{-- BUTTON CEK NAMA LAIN --}}
@@ -455,8 +483,10 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white text-lg sm:text-2xl font-black shadow-lg">
-                                        ⏳
+                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/30 text-white shadow-lg">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
                                     </div>
                                 </div>
 
@@ -480,8 +510,13 @@
                                 </div>
                             </div>
 
-                            <div class="p-4 rounded-xl bg-white/10 border border-white/20 text-xs text-amber-100 leading-relaxed font-medium">
-                                📢 <strong>Informasi:</strong> Berkas pendaftaran dan wawancara Anda saat ini sedang dalam tahap verifikasi akhir panitia seleksi. Silakan cek secara berkala.
+                            <div class="p-4 rounded-xl bg-white/10 border border-white/20 text-xs text-amber-100 leading-relaxed font-medium flex items-start gap-2.5">
+                                <svg class="w-5 h-5 text-amber-200 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <strong class="font-extrabold text-white">Informasi:</strong> Berkas pendaftaran dan wawancara Anda saat ini sedang dalam tahap verifikasi akhir panitia seleksi. Silakan cek secara berkala.
+                                </div>
                             </div>
 
                             {{-- BUTTON CEK NAMA LAIN --}}
@@ -496,7 +531,7 @@
                             </div>
                         </div>
 
-                    {{-- ⚠️ DATA TIDAK DITEMUKAN --}}
+                    {{-- DATA TIDAK DITEMUKAN --}}
                     @else
                         <div class="p-5 sm:p-8 rounded-3xl bg-white border border-rose-200 text-rose-950 space-y-5 shadow-xl text-center animate-fade-in">
                             <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-rose-300 p-0.5 bg-white shadow-md mx-auto">
@@ -509,8 +544,13 @@
                                 </p>
                             </div>
                             
-                            <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-100 text-[11px] sm:text-xs text-rose-800 font-medium">
-                                💡 <strong>Saran:</strong> Pastikan penulisan ejaan Nama Lengkap dan Tanggal Lahir sudah sesuai dengan data saat pendaftaran.
+                            <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-100 text-[11px] sm:text-xs text-rose-800 font-medium flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                                <div>
+                                    <strong class="font-bold">Saran:</strong> Pastikan penulisan ejaan Nama Lengkap dan Tanggal Lahir sudah sesuai dengan data saat pendaftaran.
+                                </div>
                             </div>
 
                             {{-- BUTTON CEK NAMA LAIN --}}
