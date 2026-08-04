@@ -54,25 +54,78 @@ class CandidateController extends Controller
         // Announcement Settings
         $announcementStatus = Setting::get('announcement_status', 'draft');
         $announcementDatetime = Setting::get('announcement_datetime', '');
+        $whatsappLinkOsis = Setting::get('whatsapp_group_link_osis', '');
+        $whatsappLinkMpk = Setting::get('whatsapp_group_link_mpk', '');
 
-        return view('penerimaan.index', compact('candidates', 'stats', 'announcementStatus', 'announcementDatetime'));
+        return view('penerimaan.index', compact('candidates', 'stats', 'announcementStatus', 'announcementDatetime', 'whatsappLinkOsis', 'whatsappLinkMpk'));
     }
 
     /**
-     * Update announcement schedule settings (Admin-02).
+     * Display settings page for Admin-02.
+     */
+    public function settings(): View
+    {
+        $announcementStatus = Setting::get('announcement_status', 'draft');
+        $announcementDatetime = Setting::get('announcement_datetime', '');
+        $whatsappLinkOsis = Setting::get('whatsapp_group_link_osis', '');
+        $whatsappLinkMpk = Setting::get('whatsapp_group_link_mpk', '');
+        $whatsappQrOsis = Setting::get('whatsapp_qr_osis', '');
+        $whatsappQrMpk = Setting::get('whatsapp_qr_mpk', '');
+
+        return view('penerimaan.settings', compact(
+            'announcementStatus',
+            'announcementDatetime',
+            'whatsappLinkOsis',
+            'whatsappLinkMpk',
+            'whatsappQrOsis',
+            'whatsappQrMpk'
+        ));
+    }
+
+    /**
+     * Update announcement schedule & WhatsApp group settings (Admin-02).
      */
     public function updateSetting(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'announcement_status' => ['required', Rule::in(['draft', 'scheduled', 'published'])],
             'announcement_datetime' => ['nullable', 'date'],
+            'whatsapp_group_link_osis' => ['nullable', 'url', 'max:500'],
+            'whatsapp_group_link_mpk' => ['nullable', 'url', 'max:500'],
+            'whatsapp_qr_osis' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
+            'whatsapp_qr_mpk' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
+        ], [
+            'whatsapp_group_link_osis.url' => 'Format URL Grup WhatsApp OSIS harus berupa link yang valid (misal: https://chat.whatsapp.com/...).',
+            'whatsapp_group_link_mpk.url' => 'Format URL Grup WhatsApp MPK harus berupa link yang valid (misal: https://chat.whatsapp.com/...).',
+            'whatsapp_qr_osis.image' => 'File QR Code OSIS harus berupa gambar.',
+            'whatsapp_qr_mpk.image' => 'File QR Code MPK harus berupa gambar.',
+            'whatsapp_qr_osis.max' => 'Ukuran gambar QR Code OSIS maksimal 2MB.',
+            'whatsapp_qr_mpk.max' => 'Ukuran gambar QR Code MPK maksimal 2MB.',
         ]);
 
         Setting::set('announcement_status', $validated['announcement_status']);
         Setting::set('announcement_datetime', $validated['announcement_datetime']);
+        Setting::set('whatsapp_group_link_osis', $validated['whatsapp_group_link_osis'] ?? '');
+        Setting::set('whatsapp_group_link_mpk', $validated['whatsapp_group_link_mpk'] ?? '');
+
+        // Upload Gambar QR Code OSIS
+        if ($request->hasFile('whatsapp_qr_osis')) {
+            $file = $request->file('whatsapp_qr_osis');
+            $filename = 'qr_osis_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/qr_codes'), $filename);
+            Setting::set('whatsapp_qr_osis', 'images/qr_codes/' . $filename);
+        }
+
+        // Upload Gambar QR Code MPK
+        if ($request->hasFile('whatsapp_qr_mpk')) {
+            $file = $request->file('whatsapp_qr_mpk');
+            $filename = 'qr_mpk_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/qr_codes'), $filename);
+            Setting::set('whatsapp_qr_mpk', 'images/qr_codes/' . $filename);
+        }
 
         return redirect()->back()
-            ->with('success', 'Pengaturan waktu & status akses pengumuman kelulusan berhasil diperbarui!');
+            ->with('success', 'Pengaturan sistem pengumuman & QR Code Grup WhatsApp berhasil diperbarui!');
     }
 
     /**

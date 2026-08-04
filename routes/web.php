@@ -25,6 +25,7 @@ Route::get('/dashboard', function () {
 // Protected Admin-02 (Penerimaan Panitia OSIS & MPK) Routes
 Route::middleware(['auth', 'role:admin-02'])->group(function () {
     Route::get('/penerimaan', [CandidateController::class, 'index'])->name('penerimaan.index');
+    Route::get('/penerimaan/pengaturan', [CandidateController::class, 'settings'])->name('penerimaan.settings');
     Route::post('/penerimaan/pengaturan-pengumuman', [CandidateController::class, 'updateSetting'])->name('penerimaan.updateSetting');
     Route::get('/penerimaan/calon/tambah', [CandidateController::class, 'create'])->name('penerimaan.create');
     Route::post('/penerimaan/calon', [CandidateController::class, 'store'])->name('penerimaan.store');

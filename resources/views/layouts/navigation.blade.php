@@ -26,6 +26,9 @@
                         <x-nav-link :href="route('penerimaan.mapping.mpk')" :active="request()->routeIs('penerimaan.mapping.mpk')">
                             Mapping MPK
                         </x-nav-link>
+                        <x-nav-link :href="route('penerimaan.settings')" :active="request()->routeIs('penerimaan.settings')">
+                            Pengaturan
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -92,6 +95,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('penerimaan.mapping.mpk')" :active="request()->routeIs('penerimaan.mapping.mpk')">
                     Mapping Calon MPK
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('penerimaan.settings')" :active="request()->routeIs('penerimaan.settings')">
+                    Pengaturan Sistem & WA
                 </x-responsive-nav-link>
             @endif
         </div>

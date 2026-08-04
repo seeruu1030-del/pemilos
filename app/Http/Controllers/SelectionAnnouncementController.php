@@ -133,6 +133,11 @@ class SelectionAnnouncementController extends Controller
             }
         }
 
+        $whatsappLinkOsis = Setting::get('whatsapp_group_link_osis', '');
+        $whatsappLinkMpk = Setting::get('whatsapp_group_link_mpk', '');
+        $whatsappQrOsis = Setting::get('whatsapp_qr_osis', '');
+        $whatsappQrMpk = Setting::get('whatsapp_qr_mpk', '');
+
         return view('pengumuman.index', [
             'candidate' => $candidate,
             'searched' => true,
@@ -145,6 +150,10 @@ class SelectionAnnouncementController extends Controller
             'targetTimestamp' => $targetTimestamp,
             'datetime' => $datetime,
             'status' => $status,
+            'whatsappLinkOsis' => $whatsappLinkOsis,
+            'whatsappLinkMpk' => $whatsappLinkMpk,
+            'whatsappQrOsis' => $whatsappQrOsis,
+            'whatsappQrMpk' => $whatsappQrMpk,
         ]);
     }
 }
