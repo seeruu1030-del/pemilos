@@ -32,17 +32,17 @@ Route::get('/dashboard', function () {
 // Protected Admin-01 (Pemilos OSIS E-Voting & Real Count) Routes
 Route::middleware(['auth', 'role:admin-01'])->group(function () {
     Route::get('/pemilos/vote', [PemilosController::class, 'index'])->name('pemilos.vote');
-    Route::post('/pemilos/vote', [PemilosController::class, 'storeVote'])->name('pemilos.storeVote');
+    Route::post('/pemilos/vote', [PemilosController::class, 'storeVote'])->middleware('throttle:60,1')->name('pemilos.storeVote');
     Route::get('/pemilos/real-count', [PemilosController::class, 'realCount'])->name('pemilos.realcount');
-    Route::get('/pemilos/real-count-data', [PemilosController::class, 'realCountData'])->name('pemilos.realcount.data');
+    Route::get('/pemilos/real-count-data', [PemilosController::class, 'realCountData'])->middleware('throttle:120,1')->name('pemilos.realcount.data');
 });
 
 // Protected Admin-03 (Pemilos MPK E-Voting & Real Count) Routes
 Route::middleware(['auth', 'role:admin-03'])->group(function () {
     Route::get('/pemilos-mpk/vote', [PemilosController::class, 'indexMpk'])->name('pemilos.mpk.vote');
-    Route::post('/pemilos-mpk/vote', [PemilosController::class, 'storeVoteMpk'])->name('pemilos.mpk.storeVote');
+    Route::post('/pemilos-mpk/vote', [PemilosController::class, 'storeVoteMpk'])->middleware('throttle:60,1')->name('pemilos.mpk.storeVote');
     Route::get('/pemilos-mpk/real-count', [PemilosController::class, 'realCountMpk'])->name('pemilos.mpk.realcount');
-    Route::get('/pemilos-mpk/real-count-data', [PemilosController::class, 'realCountDataMpk'])->name('pemilos.mpk.realcount.data');
+    Route::get('/pemilos-mpk/real-count-data', [PemilosController::class, 'realCountDataMpk'])->middleware('throttle:120,1')->name('pemilos.mpk.realcount.data');
 });
 
 // Protected Admin-02 (Penerimaan Panitia OSIS & MPK) Routes

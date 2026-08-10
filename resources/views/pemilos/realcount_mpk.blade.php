@@ -265,6 +265,8 @@
              destroy() {
                  if (this.timer) clearInterval(this.timer);
                  if (this.autoSwitchTimer) clearInterval(this.autoSwitchTimer);
+                 if (this.doughnutChart) this.doughnutChart.destroy();
+                 if (this.barChart) this.barChart.destroy();
              }
          }">
 
