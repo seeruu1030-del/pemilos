@@ -50,7 +50,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if user is Admin 01 (Pemilos).
+     * Check if user is Admin 01 (Pemilos OSIS).
      */
     public function isAdminPemilos(): bool
     {
@@ -63,6 +63,14 @@ class User extends Authenticatable
     public function isAdminPenerimaan(): bool
     {
         return $this->role === 'admin-02';
+    }
+
+    /**
+     * Check if user is Admin 03 (Pemilos MPK).
+     */
+    public function isAdminMpk(): bool
+    {
+        return $this->role === 'admin-03';
     }
 
     /**
@@ -83,8 +91,9 @@ class User extends Authenticatable
     public function getRoleLabelAttribute(): string
     {
         return match ($this->role) {
-            'admin-01' => 'Admin 01 (Pemilos)',
+            'admin-01' => 'Admin 01 (Pemilos OSIS)',
             'admin-02' => 'Admin 02 (Penerimaan)',
+            'admin-03' => 'Admin 03 (Pemilos MPK)',
             default => 'Pengguna',
         };
     }

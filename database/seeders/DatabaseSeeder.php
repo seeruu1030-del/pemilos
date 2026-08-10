@@ -35,6 +35,19 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->call(CandidateSeeder::class);
+        User::firstOrCreate(
+            ['username' => 'admin03'],
+            [
+                'name' => 'Admin Pemilos MPK',
+                'email' => 'admin03@oska.sch.id',
+                'password' => 'password',
+                'role' => 'admin-03',
+            ]
+        );
+
+        $this->call([
+            CandidateSeeder::class,
+            MpkCandidateSeeder::class,
+        ]);
     }
 }

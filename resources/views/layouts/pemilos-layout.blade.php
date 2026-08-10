@@ -38,10 +38,12 @@
                         <div class="flex items-center gap-2">
                             <h1 class="text-base sm:text-lg font-black tracking-wider text-white leading-tight">GAMANANTHA ANVAYA</h1>
                             <span class="px-2 py-0.5 rounded bg-sky-400/20 border border-sky-300/30 text-[10px] font-extrabold text-sky-200 uppercase tracking-widest hidden sm:inline-block">
-                                E-VOTING OSIS
+                                {{ Auth::user() && Auth::user()->isAdminMpk() ? 'E-VOTING MPK' : 'E-VOTING OSIS' }}
                             </span>
                         </div>
-                        <p class="text-[11px] font-bold text-sky-300">OSKA 2026/2027 • Pemilih Kategori Admin 01</p>
+                        <p class="text-[11px] font-bold text-sky-300">
+                            OSKA 2026/2027 • {{ Auth::user() && Auth::user()->isAdminMpk() ? 'Pemilih Kategori Admin 03 (MPK)' : 'Pemilih Kategori Admin 01 (OSIS)' }}
+                        </p>
                     </div>
                 </div>
 
