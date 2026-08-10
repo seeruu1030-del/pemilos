@@ -2,6 +2,11 @@ DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    
+    # Route root URL directly to public/index.php
+    RewriteRule ^$ public/index.php [L]
+    
+    # Route all other non-public requests to public directory
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
