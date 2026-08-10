@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CandidateMappingController;
+use App\Http\Controllers\PemilosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SelectionAnnouncementController;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,22 @@ Route::post('/pengumuman/cek', [SelectionAnnouncementController::class, 'check']
 Route::get('/dashboard', function () {
     /** @var \App\Models\User $user */
     $user = Auth::user();
+    if ($user && $user->isAdminPemilos()) {
+        return redirect()->route('pemilos.vote');
+    }
     if ($user && $user->isAdminPenerimaan()) {
         return redirect()->route('penerimaan.index');
     }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Protected Admin-01 (Pemilos E-Voting & Real Count) Routes
+Route::middleware(['auth', 'role:admin-01'])->group(function () {
+    Route::get('/pemilos/vote', [PemilosController::class, 'index'])->name('pemilos.vote');
+    Route::post('/pemilos/vote', [PemilosController::class, 'storeVote'])->name('pemilos.storeVote');
+    Route::get('/pemilos/real-count', [PemilosController::class, 'realCount'])->name('pemilos.realcount');
+    Route::get('/pemilos/real-count-data', [PemilosController::class, 'realCountData'])->name('pemilos.realcount.data');
+});
 
 // Protected Admin-02 (Penerimaan Panitia OSIS & MPK) Routes
 Route::middleware(['auth', 'role:admin-02'])->group(function () {

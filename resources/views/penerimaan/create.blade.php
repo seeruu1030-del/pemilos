@@ -1,17 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center gap-3.5">
+        <div class="flex items-center gap-3.5 min-w-0">
             <a href="{{ route('penerimaan.index') }}" 
-               class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition flex items-center justify-center shrink-0">
+               class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition flex items-center justify-center shrink-0"
+               title="Kembali ke Data Calon">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
             </a>
-            <div>
-                <h2 class="font-extrabold text-xl sm:text-2xl text-white leading-tight">
+            <div class="space-y-0.5 min-w-0">
+                <h2 class="font-black text-lg sm:text-xl md:text-2xl text-white tracking-tight leading-tight truncate">
                     Tambah Calon Pengurus Baru
                 </h2>
-                <p class="text-xs text-sky-200 font-medium mt-0.5">
+                <p class="text-[10px] sm:text-xs text-sky-200 font-medium truncate">
                     Penerimaan Calon OSIS & MPK SMKS Nurul Islam Periode 2026/2027
                 </p>
             </div>

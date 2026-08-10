@@ -1,27 +1,43 @@
 <x-app-layout>
     <x-slot name="header">
-        <div>
-            <h2 class="font-extrabold text-xl sm:text-2xl text-white leading-tight flex items-center gap-3">
-                <span>Pengaturan Sistem & Access Control</span>
-                <span class="text-xs px-3 py-1 rounded-full bg-white/20 text-white font-extrabold border border-white/30">
+        <div class="flex flex-col justify-center min-w-0">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <h2 class="font-black text-base sm:text-lg md:text-xl text-white tracking-tight leading-snug truncate">
+                    Pengaturan Sistem & Access Control
+                </h2>
+                <span class="text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full bg-white/20 text-white border border-white/30 tracking-wide shrink-0">
                     Admin-02 Panel
                 </span>
-            </h2>
-            <p class="text-xs text-sky-200 font-medium mt-0.5">
+            </div>
+            <p class="text-[10px] sm:text-xs text-sky-200 font-semibold truncate leading-tight mt-0.5">
                 Kelola jadwal pengumuman kelulusan publik & tautan grup WhatsApp calon pengurus OSIS/MPK
             </p>
         </div>
     </x-slot>
 
-    <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8">
+    <div class="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-6 sm:space-y-8">
 
         {{-- Alert Flash Success Message --}}
         @if (session('success'))
-            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-sm flex items-center justify-between shadow-sm animate-fade-in">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 font-bold shadow-md">✓</div>
-                    <span class="font-bold">{{ session('success') }}</span>
+            <div x-data="{ show: true }" 
+                 x-show="show" 
+                 x-transition:leave="transition ease-in duration-200" 
+                 x-transition:leave-start="opacity-100 scale-100" 
+                 x-transition:leave-end="opacity-0 scale-95" 
+                 class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/90 text-emerald-950 text-xs sm:text-sm flex items-center justify-between shadow-sm animate-fade-in relative">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 font-extrabold shadow-md">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="font-extrabold text-emerald-900 leading-snug truncate sm:whitespace-normal">{{ session('success') }}</span>
                 </div>
+                <button @click="show = false" type="button" class="p-1.5 rounded-lg text-emerald-700 hover:text-emerald-950 hover:bg-emerald-200/60 transition shrink-0 ml-3">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         @endif
 

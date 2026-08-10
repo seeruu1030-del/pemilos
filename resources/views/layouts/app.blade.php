@@ -121,6 +121,39 @@
                                         </div>
                                     </a>
                                 </div>
+                            @elseif(Auth::user()->isAdminPemilos())
+                                <div>
+                                    <div class="px-3 pb-2 text-[10px] font-black uppercase tracking-widest text-sky-300/60">
+                                        MODUL PEMILOS OSIS
+                                    </div>
+                                    <div class="space-y-1">
+                                        <a href="{{ route('pemilos.vote') }}" 
+                                           class="flex items-center justify-between px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('pemilos.vote') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
+                                            <div class="flex items-center gap-3">
+                                                <div class="p-1.5 rounded-xl {{ request()->routeIs('pemilos.vote') ? 'bg-white/20' : 'bg-[#152E54]' }}">
+                                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </div>
+                                                <span>Surat Suara OSIS</span>
+                                            </div>
+                                        </a>
+
+                                        <a href="{{ route('pemilos.realcount') }}" 
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="flex items-center justify-between px-4 py-3 rounded-2xl transition duration-200 {{ request()->routeIs('pemilos.realcount') ? 'bg-gradient-to-r from-blue-600 to-sky-600 text-white font-black shadow-lg shadow-blue-600/30 border border-sky-400/30' : 'text-sky-100/80 hover:bg-[#1B3A6B]/60 hover:text-white' }}">
+                                            <div class="flex items-center gap-3">
+                                                <div class="p-1.5 rounded-xl {{ request()->routeIs('pemilos.realcount') ? 'bg-white/20' : 'bg-[#152E54]' }}">
+                                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                                    </svg>
+                                                </div>
+                                                <span>Real Count Realtime</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                             @else
                                 <div>
                                     <div class="px-3 pb-2 text-[10px] font-black uppercase tracking-widest text-sky-300/60">
@@ -133,7 +166,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                             </svg>
                                         </div>
-                                        <span>Dashboard Pemilos</span>
+                                        <span>Dashboard</span>
                                     </a>
                                 </div>
                             @endif
@@ -173,10 +206,10 @@
             <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
                 
                 {{-- TOP HEADER BAR --}}
-                <header class="bg-gradient-to-r from-[#1E5BB8] via-[#1A4F9C] to-[#153F7C] text-white border-b border-blue-900/40 min-h-[4.5rem] py-3 flex items-center justify-between px-6 sm:px-8 shadow-md shrink-0">
-                    <div class="flex items-center gap-4">
+                <header class="bg-gradient-to-r from-[#1E5BB8] via-[#1A4F9C] to-[#153F7C] text-white border-b border-[#153F7C] h-20 flex items-center justify-between px-4 sm:px-8 shadow-md shrink-0 z-20">
+                    <div class="flex items-center gap-4 min-w-0 flex-1">
                         {{-- Mobile Menu Toggle Button --}}
-                        <button @click="sidebarOpen = true" class="lg:hidden p-2 rounded-xl text-sky-100 hover:bg-white/10" aria-label="Buka Sidebar">
+                        <button @click="sidebarOpen = true" class="lg:hidden p-2 rounded-xl text-sky-100 hover:bg-white/10 shrink-0" aria-label="Buka Sidebar">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
@@ -184,12 +217,14 @@
 
                         {{-- Page Header Title Passed from Views --}}
                         @isset($header)
-                            {{ $header }}
+                            <div class="min-w-0 w-full">
+                                {{ $header }}
+                            </div>
                         @endisset
                     </div>
 
                     {{-- Top Header Right Badges --}}
-                    <div class="hidden sm:flex items-center gap-3 text-xs">
+                    <div class="hidden sm:flex items-center gap-3 text-xs shrink-0 ml-4">
                         <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white font-extrabold border border-white/20 shadow-sm">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             Sistem Aktif
@@ -206,5 +241,4 @@
 
         </div>
     </body>
-</html>
 </html>

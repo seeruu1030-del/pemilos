@@ -24,6 +24,7 @@ class CandidateMapping extends Model
         'vision',
         'mission',
         'photo',
+        'votes_count',
     ];
 
     /**

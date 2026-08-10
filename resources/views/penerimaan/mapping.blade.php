@@ -1,29 +1,31 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-                <h2 class="font-extrabold text-xl sm:text-2xl text-white leading-tight flex items-center gap-3">
-                    <span>Mapping Pasangan Calon (Paslon) {{ $activeOrg }}</span>
-                    <span class="text-xs px-3 py-1 rounded-full bg-white/20 text-white font-extrabold border border-white/30">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 min-w-0">
+            <div class="flex flex-col justify-center min-w-0">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <h2 class="font-black text-base sm:text-lg md:text-xl text-white tracking-tight leading-snug truncate">
+                        Mapping Pasangan Calon (Paslon) {{ $activeOrg }}
+                    </h2>
+                    <span class="text-[10px] sm:text-xs font-black px-2.5 py-0.5 rounded-full bg-white/20 text-white border border-white/30 tracking-wide shrink-0">
                         Periode 2026/2027
                     </span>
-                </h2>
-                <p class="text-xs text-sky-200 font-medium mt-0.5">
+                </div>
+                <p class="text-[10px] sm:text-xs text-sky-200 font-semibold truncate leading-tight mt-0.5">
                     Geser (drag & drop) kandidat dari daftar kiri langsung ke kartu kosong Paslon di kanan.
                 </p>
             </div>
 
             <!-- Sub-Menu Navigation Tabs (OSIS vs MPK) -->
-            <div class="flex items-center gap-2 bg-white/10 p-1.5 rounded-2xl border border-white/20 shadow-inner">
+            <div class="flex items-center gap-2 bg-white/10 p-1.5 rounded-2xl border border-white/20 shadow-inner shrink-0">
                 <a href="{{ route('penerimaan.mapping.osis') }}" 
-                   class="px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-2 {{ $activeOrg === 'OSIS' ? 'bg-white text-[#1E5BB8] shadow-md' : 'text-white hover:bg-white/10' }}">
+                   class="px-3.5 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-2 {{ $activeOrg === 'OSIS' ? 'bg-white text-[#1E5BB8] shadow-md' : 'text-white hover:bg-white/10' }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>Mapping Calon OSIS</span>
                 </a>
                 <a href="{{ route('penerimaan.mapping.mpk') }}" 
-                   class="px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-2 {{ $activeOrg === 'MPK' ? 'bg-white text-[#1E5BB8] shadow-md' : 'text-white hover:bg-white/10' }}">
+                   class="px-3.5 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-2 {{ $activeOrg === 'MPK' ? 'bg-white text-[#1E5BB8] shadow-md' : 'text-white hover:bg-white/10' }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0V8m0 3h4m-4 0H7" />
                     </svg>
@@ -33,7 +35,7 @@
         </div>
     </x-slot>
 
-    <div class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8"
+    <div class="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6 sm:space-y-8"
          x-data="{
             searchCandidate: '',
             draggedCandidate: null,
@@ -74,20 +76,43 @@
 
         {{-- Flash Success Alert --}}
         @if (session('success'))
-            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-sm flex items-center justify-between shadow-sm animate-fade-in">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 font-bold shadow-md">✓</div>
-                    <span class="font-bold">{{ session('success') }}</span>
+            <div x-data="{ show: true }" 
+                 x-show="show" 
+                 x-transition:leave="transition ease-in duration-200" 
+                 x-transition:leave-start="opacity-100 scale-100" 
+                 x-transition:leave-end="opacity-0 scale-95" 
+                 class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/90 text-emerald-950 text-xs sm:text-sm flex items-center justify-between shadow-sm animate-fade-in relative">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 font-extrabold shadow-md">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <span class="font-extrabold text-emerald-900 leading-snug truncate sm:whitespace-normal">{{ session('success') }}</span>
                 </div>
+                <button @click="show = false" type="button" class="p-1.5 rounded-lg text-emerald-700 hover:text-emerald-950 hover:bg-emerald-200/60 transition shrink-0 ml-3">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         @endif
 
         {{-- Flash Error Alert --}}
         @if ($errors->any())
-            <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-950 text-sm space-y-1 shadow-sm">
-                <div class="font-bold flex items-center gap-2">
-                    <span class="w-6 h-6 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs font-black">!</span>
-                    <span>Terdapat kesalahan pengisian form:</span>
+            <div x-data="{ show: true }" 
+                 x-show="show" 
+                 class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-950 text-xs sm:text-sm space-y-1 shadow-sm relative">
+                <div class="flex items-center justify-between">
+                    <div class="font-bold flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs font-black">!</span>
+                        <span>Terdapat kesalahan pengisian form:</span>
+                    </div>
+                    <button @click="show = false" type="button" class="p-1.5 rounded-lg text-rose-700 hover:text-rose-950 hover:bg-rose-200/60 transition shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
                 <ul class="list-disc list-inside text-xs pl-8 font-medium text-rose-800">
                     @foreach ($errors->all() as $error)
