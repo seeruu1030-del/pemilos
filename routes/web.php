@@ -8,6 +8,11 @@ use App\Http\Controllers\SelectionAnnouncementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+// Dedicated Maintenance & Site Lock Announcement Page
+Route::get('/maintenance', function () {
+    return view('maintenance');
+})->name('site.maintenance');
+
 // Public Landing Page & Dedicated Announcement Page
 Route::get('/', [SelectionAnnouncementController::class, 'home'])->name('home');
 Route::get('/pengumuman', [SelectionAnnouncementController::class, 'index'])->name('pengumuman.index');
